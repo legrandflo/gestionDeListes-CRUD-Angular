@@ -14,90 +14,72 @@ export class ListViewComponent implements OnChanges {
   @Input() list: List;
 
   listForm: FormGroup;
-  nameChangeLog: string[] = [];
-  //states = states;
-  //optionName = optionName;
+  nameChangeList: string[] = [];
 
   constructor(
     private fb: FormBuilder,
     private listService: ListService) {
 
     this.createForm();
-    this.logNameChange();
+    this.listNameChange();
   }
 
   createForm() {
     this.listForm = this.fb.group({
       listName: '',
-      optionName: this.fb.array([]) //secretLairs = optionName
-      //power: '',
-      //sidekick: ''
+      optionName: this.fb.array([]) 
     });
   }
 
-  ngOnChanges() {
-    this.listForm.reset({
-      listName: this.list.listName
-    });
-    this.setOptions(this.list.options);
+  listNameChange() { //changement du nom de la liste
+    const nameControl = this.listForm.get('listName'); // le get va chercher le nom du formControlName de listForm
+    nameControl.valueChanges.forEach(
+      (value: string) => this.nameChangeList.push(value)
+    );
   }
 
-  get optionName(): FormArray {
+  get optionName(): FormArray { //initialisation de optionName en formArray
     return this.listForm.get('optionName') as FormArray;
   };
 
-  setOptions(options: Options[]) {
+  setOptions(options: Options[]) { //crée un tableau d'options avec les champs remplis
     const optionFGs = options.map(option => this.fb.group(option));
     const optionFormArray = this.fb.array(optionFGs);
     this.listForm.setControl('optionName', optionFormArray);
   }
 
-  addLair() {
-    console.log('optionNamede AddLair AVANT PUSH',this.optionName)
+  addOption() { // appelé au bouton "ajouter une option"
     this.optionName.push(this.fb.group(new Options()));
-    console.log('optionNamede AddLair APRES PUSH',this.optionName)
-
-    //const newOption = this.fb.control(null, Validators.required);
-    //this.optionName().push(newOption)
   }
 
-  onSubmit() {
-    console.log('list Onsubmit AVANT prepareSaveList',this.list)
-    this.list = this.prepareSaveList();
-    console.log('list Onsubmit APRES prepareSaveList',this.list)
-
-    this.listService.updateList(this.list).subscribe(/* error handling */);
-    this.ngOnChanges();
-  }
-
-  prepareSaveList(): List {
-    
+  prepareSaveList(): List { //mise à jour de la liste locale
     const formModel = this.listForm.value;
-
-    // deep copy of form model lairs
-    const secretLairsDeepCopy: Options[] = formModel.optionName.map(
+    const optionCopy: Options[] = formModel.optionName.map(
       (option: Options) => Object.assign({}, option)
     );
-
-    // return new `Hero` object containing a combination of original hero value(s)
-    // and deep copies of changed form model values
     const saveList: List = {
       id: this.list.id,
       listName: formModel.listName as string,
-      // addresses: formModel.secretLairs // <-- bad!
-      options: secretLairsDeepCopy
+      options: optionCopy
     };
     return saveList;
   }
 
-  revert() { this.ngOnChanges(); }
-
-  logNameChange() { 
-    const nameControl = this.listForm.get('listName'); // le get va chercher le nom du formControlName de listForm
-    nameControl.valueChanges.forEach(
-      (value: string) => this.nameChangeLog.push(value)
-    );
+  ngOnChanges() { //réinitialisation du formulaire
+    this.listForm.reset({ //fait la modif en visuel : si on a modifié qqch, il le garde et l'affiche en visuel
+      listName: this.list.listName
+    });
+    this.setOptions(this.list.options);
   }
+
+  revert() { this.ngOnChanges(); } // fonction "supprimer"
+
+  onSubmit() {
+    this.list = this.prepareSaveList();
+    this.listService.updateList(this.list).subscribe(); // mise à jour de la liste dans le service (BDD)
+    this.ngOnChanges();
+  }
+
 }
 
 

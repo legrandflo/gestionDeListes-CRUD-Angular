@@ -1,16 +1,39 @@
+<h1><a (click)="getLists()">Gérez vos listes !</a></h1>
 <h3 *ngIf="isLoading"><i>Loading lists ... </i></h3>
-<h3 *ngIf="!isLoading">Select a list:</h3>
+<div class="row">
+<div class="col-sm-12" id="btn1">
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">créer une nouvelle liste</button>
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <list-view ></list-view>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+  <hr>
+  <div class="row">
+<div class="col-sm-12">
+<h4 *ngIf="!isLoading">Selectionnez une liste:</h4>
+<button *ngFor="let list of lists | async" (click)="select(list)" id="btn2">{{list.listName}}</button>
+</div>
+</div>
 
-<nav>
-  <button (click)="getLists()" class="btn btn-primary">Refresh</button>
-  <a *ngFor="let list of lists | async" (click)="select(list)">{{list.listName}}</a>
-</nav>
+ 
+ 
+
+
+
+
+
 
 <div *ngIf="selectedList">
   <hr>
-  <h2>List Detail</h2>
-  <h3>Editing: {{selectedList.listName}}</h3>
+  
+  <h3> {{selectedList.listName}}</h3>
   <list-view [list]="selectedList"></list-view>
 </div>
+
+
 
 

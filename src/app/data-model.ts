@@ -5,10 +5,8 @@ export class List {
 }
 
 export class Options {
-  key = ''; //street
-  optionName = ''; //city   = '';
-  //state  = '';
-  //zip    = '';
+  key = ''; 
+  optionName = ''; 
 }
 
 export const lists: List[] = [
