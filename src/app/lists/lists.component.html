@@ -1,0 +1,16 @@
+<h3 *ngIf="isLoading"><i>Loading lists ... </i></h3>
+<h3 *ngIf="!isLoading">Select a list:</h3>
+
+<nav>
+  <button (click)="getLists()" class="btn btn-primary">Refresh</button>
+  <a *ngFor="let list of lists | async" (click)="select(list)">{{list.listName}}</a>
+</nav>
+
+<div *ngIf="selectedList">
+  <hr>
+  <h2>List Detail</h2>
+  <h3>Editing: {{selectedList.listName}}</h3>
+  <list-view [list]="selectedList"></list-view>
+</div>
+
+
