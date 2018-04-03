@@ -1,0 +1,42 @@
+<form [formGroup]="listForm" (ngSubmit)="onSubmit()" novalidate>
+  <div style="margin-bottom: 1em">
+    <button type="submit" [disabled]="listForm.pristine" class="btn btn-success">Save</button> &nbsp;
+    <button type="reset" (click)="revert()" [disabled]="listForm.pristine" class="btn btn-danger">Revert</button>
+  </div>
+
+  <!-- Hero Detail Controls -->
+  <div class="form-group">
+    <label class="center-block">Nom de la liste:
+      <input class="form-control" formControlName="listName">
+    </label>
+  </div>
+
+  <div formArrayName="optionName" class="well well-lg">
+    <div *ngFor="let option of optionName().controls; let i=index" [formGroupName]="i">
+      <!-- The repeated address template -->
+      <h4>Options #{{i + 1}}</h4>
+      <div style="margin-left: 1em;">
+        <div class="form-group">
+          <label class="center-block">clé:
+            <input class="form-control" formControlName="key">
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="center-block">nom de l'option:
+            <input class="form-control" formControlName="optionName">
+          </label>
+        </div>
+      </div>
+      <br>
+      <!-- End of the repeated address template -->
+    </div>
+    <button (click)="addLair()" type="button">Add an option</button>
+    <!--addLair-->
+  </div>
+ 
+</form>
+
+<p>listForm value: {{ listForm.value | json}}</p>
+
+<h4>Name change log</h4>
+<div *ngFor="let elem of nameChangeLog">{{elem}}</div> <!-- boucle sur les listName-->
