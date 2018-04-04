@@ -13,7 +13,7 @@ import { ListService } from '../list.service';
 })
 export class ListsComponent implements OnInit {
   lists: Observable<List[]>;
-  isLoading = false;
+  showBtn : Boolean; //bouton retour modal
   selectedList: List;
 
   constructor(private listService: ListService) { }
@@ -21,14 +21,13 @@ export class ListsComponent implements OnInit {
   ngOnInit() { this.getLists(); }
 
   getLists() {
-    this.isLoading = true;
+    //this.isLoading = true;
     this.lists = this.listService.getLists()
-                      // Todo: error handling
-                      .finally(() => this.isLoading = false);
     this.selectedList = undefined;
   }
 
-  select(list: List) { this.selectedList = list; }
+  select(list: List) { this.selectedList = list;
+  }
 }
 
 

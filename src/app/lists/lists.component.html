@@ -1,11 +1,11 @@
 <h1><a (click)="getLists()">Gérez vos listes !</a></h1>
-<h3 *ngIf="isLoading"><i>Loading lists ... </i></h3>
+
 <div class="row">
 <div class="col-sm-12" id="btn1">
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">créer une nouvelle liste</button>
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" >créer une nouvelle liste</button>
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
-        <list-view ></list-view>
+        <list-view [showBtn]=true></list-view>
       </div>
     </div>
   </div>
@@ -14,24 +14,16 @@
   <hr>
   <div class="row">
 <div class="col-sm-12">
-<h4 *ngIf="!isLoading">Selectionnez une liste:</h4>
-<button *ngFor="let list of lists | async" (click)="select(list)" id="btn2">{{list.listName}}</button>
+<h4>Sélectionnez une liste:</h4>
+<a class="a1" *ngFor="let list of lists | async"><button (click)="select(list)" id="btn2">{{list.listName}}</button><!--<span  class="glyphicon glyphicon-trash"></span>--></a>
 </div>
 </div>
-
- 
- 
-
-
-
-
-
 
 <div *ngIf="selectedList">
   <hr>
   
   <h3> {{selectedList.listName}}</h3>
-  <list-view [list]="selectedList"></list-view>
+  <list-view [list]="selectedList" [showBtn]=false ></list-view>
 </div>
 
 

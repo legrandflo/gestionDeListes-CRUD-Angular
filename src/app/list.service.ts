@@ -1,26 +1,23 @@
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs/Observable';
 import { of }         from 'rxjs/observable/of';
-import 'rxjs/add/operator/delay';
 
 import { List, lists } from './data-model'; //import du type List et de la liste
 
 @Injectable()
 export class ListService {
-
-  delayMs = 500;
-
-  // Fake server get; assume nothing can go wrong
+  
   getLists(): Observable<List[]> {
-    return of(lists).delay(this.delayMs); // simulate latency with delay
+    return of(lists);
   }
 
-  // Fake server update; assume nothing can go wrong
-  updateList(list: List): Observable<List>  {
-    const oldList = lists.find(res => res.id === list.id);
-    const newList = Object.assign(oldList, list); // Demo: mutate cached hero
-    return of(newList).delay(this.delayMs); // simulate latency with delay
+  // fonction d'update OU création de liste
+  updateList(liste: List): Observable<List>  { //liste = this.list du listViewCom
+    const oldList = lists.find(res => res.id === liste.id); //va chercher l'id de la liste du model
+    if(oldList){ //update de liste : si l'id de la liste existe, modifie 
+    const newList = Object.assign(oldList, liste); // assigne les modifs à l'ancienne liste
+    return of(newList);}
+    else {lists.push(liste);} // création d'une nouvelle liste : si pas de liste existante, on push celle rentrée
   }
 }
 

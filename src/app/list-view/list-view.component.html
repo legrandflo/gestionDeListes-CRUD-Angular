@@ -1,7 +1,4 @@
 <div class="modal-content">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"></button>
-  </div>
   <div class="modal-body">
     <div class="container">
       <div class="card" style="width:auto">
@@ -16,7 +13,7 @@
           </div>
 
           <div formArrayName="optionName" class="well well-lg">
-            <div *ngFor="let option of optionName.controls; let i=index" [formGroupName]="i">
+            <div *ngFor="let option of optionName().controls; let i=index" [formGroupName]="i">
               <!-- boucle options -->
               <h4>Options #{{i + 1}}</h4>
               <div style="margin-left: 1em;">
@@ -32,17 +29,15 @@
                 </div>
               </div>
               <br>
-              <!-- End of the repeated address template -->
             </div>
-            <button (click)="addOption()" type="button">Ajouter une option</button>
+            <button (click)="addOption()" type="button" class="btn btn-outline-info">Ajouter une option</button>
 
           </div>
           <div style="margin-bottom: 1em">
 
             <button id="btn1" type="submit" [disabled]="listForm.pristine" class="btn btn-success">Sauvegarder</button> &nbsp;
             <button id="btn1" type="reset" (click)="revert()" [disabled]="listForm.invalid" class="btn btn-danger">Effacer</button>
-
-            <button type="return" class="btn btn-outline-secondary" data-dismiss="modal">Retour</button>
+           <span *ngIf="showBtn"><button  type="return" class="btn btn-outline-secondary" data-dismiss="modal">Retour</button></span>
           </div>
         </form>
       </div>
@@ -50,10 +45,3 @@
     </div>
   </div>
 </div>
-
-
-<p>listForm value: {{ listForm.value | json}}</p>
-
-<h4>List name change </h4>
-<div *ngFor="let elem of nameChangeList">{{elem}}</div>
-<!-- boucle sur les listName-->
