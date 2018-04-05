@@ -1,7 +1,7 @@
-import { Component, Input, OnChanges }       from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Options, List, lists } from '../data-model';
+import { Options, List } from '../data-model';
 import { ListService } from '../list.service';
 import { Observable } from 'rxjs/Observable';
 import { of }         from 'rxjs/observable/of';
@@ -21,8 +21,7 @@ export class ListViewComponent implements OnChanges {
   constructor(
     private fb: FormBuilder,
     private listService: ListService) {
-
-    this.createForm();
+this.createForm();
   }
 
   createForm() { //création du form vide
@@ -49,7 +48,7 @@ export class ListViewComponent implements OnChanges {
     const formModel = this.listForm.value;
     let newId = 0;
       if (this.list){newId = this.list.id;} //list vient avec l'@Input (elem of lists) de listComp
-      else {newId = lists.length;} //length = longueur de la liste qui est dans le model
+      else {newId = this.listService.listes.length;} //length = longueur de la liste qui est dans le model
     const optionCopy: Options[] = formModel.optionName.map(
       (option: Options) => Object.assign({}, option)
     );
@@ -74,7 +73,7 @@ export class ListViewComponent implements OnChanges {
   onSubmit() {
     this.list = this.prepareSaveList();
     this.listService.updateList(this.list).subscribe(); // mise à jour de la liste dans le service (BDD)
-    this.ngOnChanges();
+        this.ngOnChanges();
   }
 
 }

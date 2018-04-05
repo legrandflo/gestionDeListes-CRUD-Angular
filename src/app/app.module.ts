@@ -12,7 +12,7 @@ import { ListViewComponent } from './list-view/list-view.component';
 @NgModule({
   imports: [
     BrowserModule,
-    ReactiveFormsModule // <-- #2 add to @NgModule imports
+    ReactiveFormsModule// <-- #2 add to @NgModule imports
   ],
   declarations: [
     AppComponent,ListsComponent
