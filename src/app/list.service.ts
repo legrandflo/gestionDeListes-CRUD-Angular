@@ -61,6 +61,12 @@ export class ListService {
   addList(liste: List){
     this.listes.push(liste);
   }
+
+  deleteList(liste:List){
+    console.log('service list :',liste);
+    this.listes.splice(liste.id,1);
+    console.log(this.listes);
+  }
 }
 
 

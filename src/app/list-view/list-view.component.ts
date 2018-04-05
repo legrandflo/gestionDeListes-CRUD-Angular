@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Renderer2, OnInit, AfterViewInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Options, List } from '../data-model';
@@ -11,7 +11,7 @@ import { of } from 'rxjs/observable/of';
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.css']
 })
-export class ListViewComponent implements OnChanges {
+export class ListViewComponent implements OnChanges, OnInit, AfterViewInit {
   @Input() list: List; //import de listComp
   @Input() showBtn: Boolean;
   @Input() typeBouton: string;
@@ -22,8 +22,23 @@ export class ListViewComponent implements OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private listService: ListService) {
+    private listService: ListService,
+  private renderer:Renderer2) {
     this.createForm();
+  }
+  ngOnInit(){
+    let inputElement = this.renderer.selectRootElement('#focus');
+    console.log('element : ',inputElement);
+
+    setTimeout(()=>{
+
+      console.log('set focus')
+      inputElement.focus();
+    }, 500)
+    
+  }
+  ngAfterViewInit(){
+    
   }
 
   createForm() { //création du form vide

@@ -1,8 +1,11 @@
-<h1><a (click)="getLists()">Gérez vos listes !</a></h1>
+<h1>
+  <a (click)="getLists()">Gérez vos listes !</a>
+</h1>
+<p><ngb-progressbar type="success" [value]="25"></ngb-progressbar></p>
 
 <div class="row">
-<div class="col-sm-12" id="btn1">
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" >créer une nouvelle liste</button>
+  <div class="col-sm-12" id="btn1">
+    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">créer une nouvelle liste</button>
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
         <list-view [showBtn]=true [typeBouton]="'addListe'"></list-view>
@@ -10,22 +13,22 @@
     </div>
   </div>
 </div>
- 
-  <hr>
-  <div class="row">
-<div class="col-sm-12">
-<h4>Sélectionnez une liste:</h4>
-<a class="a1" *ngFor="let list of lists | async"><button (click)="select(list)" id="btn2">{{list.listName}}</button><!--<span  class="glyphicon glyphicon-trash"></span>--></a>
-</div>
+
+<hr>
+<div class="row">
+  <div class="col-sm-12">
+    <h4>Sélectionnez une liste:</h4>
+    <a class="a1" *ngFor="let list of lists | async">
+      <button (click)="select(list)" id="btn2">{{list.listName}}</button>
+      <a class="glyphicon glyphicon-trash" (click)="delete(list)"></a>
+    </a>
+  </div>
 </div>
 
 <div *ngIf="selectedList">
   <hr>
-  
+
   <h3> {{selectedList.listName}}</h3>
   <list-view [list]="selectedList" [showBtn]=false [typeBouton]="'updateListe'"></list-view>
 </div>
-
-
-
 

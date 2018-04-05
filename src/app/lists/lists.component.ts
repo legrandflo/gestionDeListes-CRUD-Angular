@@ -5,7 +5,6 @@ import 'rxjs/add/operator/finally';
 import { List } from '../data-model';
 import { ListService } from '../list.service';
 
-
 @Component({
   selector: 'lists',
   templateUrl: './lists.component.html',
@@ -27,8 +26,13 @@ export class ListsComponent implements OnInit {
   }
 
   select(list: List) {
-  this.selectedList = list;
+    this.selectedList = list;
+  }
+  delete(list: List) {
+    console.log("poubelle liste", list);
+    this.listService.deleteList(list);
   }
 }
+
 
 
