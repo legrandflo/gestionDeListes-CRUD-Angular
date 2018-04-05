@@ -4,7 +4,7 @@
       <div class="card" style="width:auto">
         <br>
 
-        <form [formGroup]="listForm" (ngSubmit)="onSubmit()" novalidate>
+        <form [formGroup]="listForm" (ngSubmit)="onSubmit(typeBouton)" novalidate>
           <!-- Nom de la liste -->
           <div class="form-group">
             <label class="center-block">Nom de la liste:
@@ -45,3 +45,4 @@
     </div>
   </div>
 </div>
+

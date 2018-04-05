@@ -51,16 +51,15 @@ export class ListService {
     return of(this.listes);
   }
 
-  // fonction d'update OU création de liste
-  updateList(liste: List): Observable<List> { //liste = this.list du listViewCom
-    const oldList = this.listes.find(res => res.id === liste.id); //va chercher l'id de la liste du model
-    if (oldList) { //update de liste : si l'id de la liste existe, modifie 
-      const newList = Object.assign(oldList, liste); // assigne les modifs à l'ancienne liste
-      return of(newList);
-    }
-    else {
-      this.listes.push(liste);
-    } // création d'une nouvelle liste : si pas de liste existante, on push celle rentrée
+ // fonction d'update de liste existante
+ updateList(liste: List): Observable<List> { //liste = this.list du listViewCom
+  const oldList = this.listes.find(res => res.id === liste.id); //va chercher l'id de la liste du model
+    const newList = Object.assign(oldList, liste); // assigne les modifs à l'ancienne liste
+    return of(newList);
+}
+//fonction de création de liste
+  addList(liste: List){
+    this.listes.push(liste);
   }
 }
 

@@ -5,7 +5,7 @@
     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" >créer une nouvelle liste</button>
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
-        <list-view [showBtn]=true></list-view>
+        <list-view [showBtn]=true [typeBouton]="'addListe'"></list-view>
       </div>
     </div>
   </div>
@@ -23,7 +23,7 @@
   <hr>
   
   <h3> {{selectedList.listName}}</h3>
-  <list-view [list]="selectedList" [showBtn]=false ></list-view>
+  <list-view [list]="selectedList" [showBtn]=false [typeBouton]="'updateListe'"></list-view>
 </div>
 
 
