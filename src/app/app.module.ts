@@ -7,7 +7,6 @@ import { ListService } from './list.service';
 import { ListsComponent } from './lists/lists.component';
 import { ListViewComponent } from './list-view/list-view.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { DirectivesModule } from './directives/directives.module';
 
 
 
@@ -15,8 +14,7 @@ import { DirectivesModule } from './directives/directives.module';
   imports: [
     BrowserModule,
     ReactiveFormsModule,// <-- #2 add to @NgModule imports
-    NgbModule.forRoot(),
-    DirectivesModule
+    NgbModule.forRoot()
   ],
   declarations: [
     AppComponent,ListsComponent

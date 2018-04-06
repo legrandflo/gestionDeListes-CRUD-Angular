@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, Renderer2, OnInit, AfterViewInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Options, List } from '../data-model';
@@ -11,35 +11,20 @@ import { of } from 'rxjs/observable/of';
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.css']
 })
-export class ListViewComponent implements OnChanges, OnInit, AfterViewInit {
+export class ListViewComponent implements OnChanges {
   @Input() list: List; //import de listComp
   @Input() showBtn: Boolean;
   @Input() typeBouton: string;
 
 
   listForm: FormGroup;
-  nameChangeList: string[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private listService: ListService,
-  private renderer:Renderer2) {
+    private listService: ListService) {
     this.createForm();
   }
-  ngOnInit(){
-    let inputElement = this.renderer.selectRootElement('#focus');
-    console.log('element : ',inputElement);
 
-    setTimeout(()=>{
-
-      console.log('set focus')
-      inputElement.focus();
-    }, 500)
-    
-  }
-  ngAfterViewInit(){
-    
-  }
 
   createForm() { //création du form vide
     this.listForm = this.fb.group({
@@ -100,7 +85,7 @@ export class ListViewComponent implements OnChanges, OnInit, AfterViewInit {
         optionName: this.fb.array([])
       });
     }
-    else if (this.typeBouton == "updateListe"){
+    else if (this.typeBouton == "updateListe") {
       this.listService.updateList(this.list).subscribe(); // mise à jour de la liste dans le service (BDD)
     }
     //this.ngOnChanges();
