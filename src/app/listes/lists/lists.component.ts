@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/finally';
 
+import { ListesService } from '../listes.service';
 import { List } from '../data-model';
-import { ListService } from '../list.service';
 
 @Component({
   selector: 'lists',
@@ -15,7 +15,7 @@ export class ListsComponent implements OnInit {
   showBtn: Boolean; //bouton retour modal
   selectedList: List;
 
-  constructor(private listService: ListService) { }
+  constructor(private listService: ListesService) { }
 
   ngOnInit() { this.getLists(); }
 

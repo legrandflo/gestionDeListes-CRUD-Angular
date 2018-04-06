@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Options, List } from '../data-model';
-import { ListService } from '../list.service';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { ListesService } from '../listes.service';
+import { List,Options } from '../data-model';
 
 @Component({
   selector: 'list-view',
@@ -21,7 +21,7 @@ export class ListViewComponent implements OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private listService: ListService) {
+    private listService: ListesService) {
     this.createForm();
   }
 
