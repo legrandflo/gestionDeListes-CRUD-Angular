@@ -57,15 +57,17 @@ export class ListService {
     const newList = Object.assign(oldList, liste); // assigne les modifs à l'ancienne liste
     return of(newList);
 }
-//fonction de création de liste
+//fonction de création de liste d'options dans la listes
   addList(liste: List){
     this.listes.push(liste);
   }
 
-  deleteList(liste:List){
-    console.log('service list :',liste);
-    this.listes.splice(liste.id,1);
-    console.log(this.listes);
+  //supprime une liste d'options dans listes
+  deleteList(liste:List){    
+    //result.id avec id propriete du tableau listes et liste.id valeur de id dans la liste qui est en parametre
+    //NewIndexOfListe index de la liste dans le tableau d'objets different de id de la liste
+    let NewIndexOfListe = this.listes.findIndex(result => result.id === liste.id); 
+    this.listes.splice(NewIndexOfListe,1);//supprime 1 element a la position NewIndexOfListe
   }
 }
 
