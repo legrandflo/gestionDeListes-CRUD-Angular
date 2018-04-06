@@ -3,15 +3,13 @@
     <div class="container">
       <div class="card" style="width:auto">
         <br>
-
         <form [formGroup]="listForm" (ngSubmit)="onSubmit(typeBouton)" novalidate>
           <!-- Nom de la liste -->
           <div class="form-group">
             <label class="center-block">Nom de la liste:
-              <input class="form-control" formControlName="listName"  ><!--id="focus"-->
+              <input class="form-control" formControlName="listName" ><!--id="focus"-->
             </label>
           </div>
-
           <div formArrayName="optionName" class="well well-lg">
             <div *ngFor="let option of optionName().controls; let i=index" [formGroupName]="i">
               <!-- boucle options -->

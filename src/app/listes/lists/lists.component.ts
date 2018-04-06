@@ -25,12 +25,12 @@ export class ListsComponent implements OnInit {
     this.selectedList = undefined;
   }
 
-  select(list: List) {
-    this.selectedList = list;
+  select(elementlist: List) {
+    this.selectedList = elementlist;
   }
-  delete(list: List) {
-    console.log("poubelle liste", list);
-    this.listService.deleteList(list);
+  delete(elementlist: List) {
+    console.log("poubelle liste", elementlist);
+    this.listService.deleteList(elementlist);
   }
 }
 
