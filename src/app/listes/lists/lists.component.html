@@ -4,12 +4,7 @@
 
 <div class="row">
   <div class="col-sm-12" id="btn1">
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">créer une nouvelle liste</button>
-    <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
-        <list-view [showBtn]=true [typeBouton]="'addListe'"></list-view>
-      </div>
-    </div>
+    <button type="button" class="btn btn-info" (click)="openAdd()">créer une nouvelle liste</button>
   </div>
 </div>
 
@@ -18,15 +13,11 @@
   <div class="col-sm-12">
     <h4>Sélectionnez une liste:</h4>
     <a class="a1" *ngFor="let elemlist of lists | async">
-      <button (click)="select(elemlist)" id="btn2">{{elemlist.listName}}</button>
+      <button (click)="openSelectUpdate(elemlist)" id="btn2">{{elemlist.listName}}</button>
       <a class="glyphicon glyphicon-trash" (click)="delete(elemlist)"></a>
     </a>
   </div>
 </div>
 
-<div *ngIf="selectedList">
-  <hr>
-  <h3> {{selectedList.listName}}</h3>
-  <list-view [list]="selectedList" [showBtn]=false [typeBouton]="'updateListe'"></list-view>
-</div>
+
 

@@ -1,10 +1,11 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { ListesService } from '../listes.service';
 import { List,Options } from '../data-model';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'list-view',
@@ -13,7 +14,6 @@ import { List,Options } from '../data-model';
 })
 export class ListViewComponent implements OnChanges {
   @Input() list: List; //import de listComp
-  @Input() showBtn: Boolean;
   @Input() typeBouton: string;
 
 
@@ -21,7 +21,8 @@ export class ListViewComponent implements OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private listService: ListesService) {
+    private listService: ListesService,
+    public activeModal: NgbActiveModal) {
     this.createForm();
   }
 
@@ -88,6 +89,7 @@ export class ListViewComponent implements OnChanges {
     else if (this.typeBouton == "updateListe") {
       this.listService.updateList(this.list).subscribe(); // mise à jour de la liste dans le service (BDD)
     }
+    this.activeModal.close(); //activeModal vient de NgbModule pour utliser close et dismiss sur le modal
     //this.ngOnChanges();
   }
 

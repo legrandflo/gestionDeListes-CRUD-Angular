@@ -1,46 +1,51 @@
-<div class="modal-content">
-  <div class="modal-body">
-    <div class="container">
-      <div class="card" style="width:auto">
-        <br>
-        <form [formGroup]="listForm" (ngSubmit)="onSubmit(typeBouton)" novalidate>
-          <!-- Nom de la liste -->
-          <div class="form-group">
-            <label class="center-block">Nom de la liste:
-              <input class="form-control" formControlName="listName" ><!--id="focus"-->
-            </label>
-          </div>
-          <div formArrayName="optionName" class="well well-lg">
-            <div *ngFor="let option of optionName().controls; let i=index" [formGroupName]="i">
-              <!-- boucle options -->
-              <h4>Options #{{i + 1}}</h4>
-              <div style="margin-left: 1em;">
-                <div class="form-group">
-                  <label class="center-block">clé:
-                    <input class="form-control" formControlName="key"  required>
-                  </label>
-                </div>
-                <div class="form-group">
-                  <label class="center-block">nom de l'option:
-                    <input class="form-control" formControlName="optionName"  required>
-                  </label>
-                </div>
-              </div>
-              <br>
-            </div>
-            <button (click)="addOption()" type="button" class="btn btn-outline-info">Ajouter une option</button>
 
-          </div>
-          <div style="margin-bottom: 1em">
+<div class="modal-header">
+  <h4>{{title}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"><!--activeModal vient de NgbModule / cf ng-bootstrap-->
+    <span aria-hidden="true">&times;</span> <!--fabrication de la petite croix et sa fonction pour fermer le modal -->
+  </button>
+</div>
 
-            <button id="btn1" type="submit" [disabled]="listForm.pristine" class="btn btn-success">Sauvegarder</button> &nbsp;
-            <button id="btn1" type="reset" (click)="revert()" [disabled]="listForm.invalid" class="btn btn-danger">Effacer</button>
-           <span *ngIf="showBtn"><button  type="return" class="btn btn-outline-secondary" data-dismiss="modal">Retour</button></span>
-          </div>
-        </form>
+<div class="modal-body">
+  <div class="container">
+    <h4>{{list | json}}</h4>
+    <form [formGroup]="listForm" (ngSubmit)="onSubmit(typeBouton)" novalidate>
+      <!-- Nom de la liste -->
+      <div class="form-group">
+        <label class="center-block">Nom de la liste:
+            <!-- <input type= "text" class="form-control" [formControl]="listForm.controls['listName']" name="listName"> -->
+          <input type= "text" class="form-control" formControlName="listName" name="listName" [(ngModel)]="listName">
+          <!--id="focus"-->
+        </label>
       </div>
-      <br>
-    </div>
+      <div formArrayName="optionName" class="well well-lg">
+        <div *ngFor="let option of optionName().controls; let i=index" [formGroupName]="i">
+          <!-- boucle options -->
+          <h4>Options #{{i + 1}}</h4>
+          <div style="margin-left: 1em;">
+            <div class="form-group">
+              <label class="center-block">clé:
+                <input class="form-control" formControlName="key" required>
+              </label>
+            </div>
+            <div class="form-group">
+              <label class="center-block">nom de l'option:
+                <input class="form-control" formControlName="optionName" required>
+              </label>
+            </div>
+          </div>
+          <br>
+        </div>
+        <button (click)="addOption()" type="button" class="btn btn-outline-info">Ajouter une option</button>
+      </div>
+      <div style="margin-bottom: 1em">
+        <button id="btn1" type="submit" [disabled]="listForm.pristine" class="btn btn-success">Sauvegarder</button> 
+        <!-- <h2>&nbsp;</h2> -->
+        <button id="btn1" type="reset" (click)="revert()" [disabled]="listForm.invalid" class="btn btn-danger">Effacer</button>
+        <button type="return" class="btn btn-outline-secondary" (click)="activeModal.dismiss('Close click')">Retour</button>
+      </div>
+    </form>
   </div>
+  <br>
 </div>
 
