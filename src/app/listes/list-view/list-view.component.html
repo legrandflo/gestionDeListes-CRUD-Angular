@@ -9,12 +9,13 @@
 <div class="modal-body">
   <div class="container">
     <h4>{{list | json}}</h4>
+   <ng-template>
     <form [formGroup]="listForm" (ngSubmit)="onSubmit(typeBouton)" novalidate>
       <!-- Nom de la liste -->
       <div class="form-group">
         <label class="center-block">Nom de la liste:
             <!-- <input type= "text" class="form-control" [formControl]="listForm.controls['listName']" name="listName"> -->
-          <input type= "text" class="form-control" formControlName="listName" name="listName" [(ngModel)]="listName">
+          <input type= "text" class="form-control" formControlName="listName" name="listName" [(ngModel)]="listName">{{listName}}
           <!--id="focus"-->
         </label>
       </div>
@@ -45,6 +46,7 @@
         <button type="return" class="btn btn-outline-secondary" (click)="activeModal.dismiss('Close click')">Retour</button>
       </div>
     </form>
+  </ng-template>
   </div>
   <br>
 </div>

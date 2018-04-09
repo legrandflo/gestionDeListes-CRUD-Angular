@@ -5,6 +5,8 @@ import { AppComponent }        from './app.component';
 import { ListesModule } from './listes/listes.module';
 import { ListViewComponent } from './listes/list-view/list-view.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ListView2Component } from './listes/list-view-2/list-view-2.component';
+
 
 
 @NgModule({
@@ -14,10 +16,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule.forRoot()
   ],
   declarations: [
-    AppComponent   
+    AppComponent,
   ],
   bootstrap: [ AppComponent ],
-  entryComponents :[ListViewComponent]
+  entryComponents :[ListViewComponent, ListView2Component]
 })
 export class AppModule { }
 

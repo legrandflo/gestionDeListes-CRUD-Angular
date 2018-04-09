@@ -68,14 +68,15 @@ export class ListViewComponent implements OnChanges {
     return saveList;
   }
 
-  ngOnChanges() { //réinitialisation du formulaire
+  ngOnChanges(changes) { //réinitialisation du formulaire
+    console.log("changes = ", changes);
     this.listForm.reset({ //fait la modif en visuel : si on a modifié qqch, il le garde et l'affiche en visuel
       listName: this.list.listName
     });
     this.setOptions(this.list.options);
   }
 
-  revert() { this.ngOnChanges(); } // fonction "effacer"
+ // revert() { this.ngOnChanges(); } // fonction "effacer"
 
   onSubmit() {
     this.list = this.prepareSaveList();

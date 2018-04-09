@@ -6,6 +6,7 @@ import { ListesService } from '../listes.service';
 import { List } from '../data-model';
 import { ListViewComponent } from '../list-view/list-view.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ListView2Component } from '../list-view-2/list-view-2.component';
 
 @Component({
   selector: 'lists',
@@ -33,11 +34,24 @@ export class ListsComponent implements OnInit {
     modalRef.componentInstance.typeBouton = 'addListe'; 
   }
 
+  openAdd2() { //ouvre un modal liste vide
+    const modalRef = this.modalService.open(ListView2Component);
+    //modalRef.componentInstance.title = 'Ajouter une liste';
+   // modalRef.componentInstance.typeBouton = 'addListe'; 
+  }
+
   openSelectUpdate(elementlist: List) { //ouvre modal avec contenu
     this.selectedList = elementlist;
     const modalRef = this.modalService.open(ListViewComponent);
     modalRef.componentInstance.list = this.selectedList;
     modalRef.componentInstance.typeBouton = 'updateListe';
+  }
+
+  openSelectUpdate2(elementlist: List) { //ouvre modal avec contenu
+    this.selectedList = elementlist;
+    const modalRef = this.modalService.open(ListView2Component);
+   // modalRef.componentInstance.list = this.selectedList;
+    //modalRef.componentInstance.typeBouton = 'updateListe';
   }
 
   delete(elementlist: List) {
