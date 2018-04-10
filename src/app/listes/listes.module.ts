@@ -5,7 +5,6 @@ import { ListesService } from './listes.service';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ListView2Component } from './list-view-2/list-view-2.component';
 import {FormlyModule, FormlyBootstrapModule} from 'ng-formly';
 import { ListViewComponent } from './list-view/list-view.component';
 
@@ -21,7 +20,7 @@ import { ListViewComponent } from './list-view/list-view.component';
   
   ],
   declarations: [
-    ListsComponent,ListViewComponent, ListView2Component
+    ListsComponent,ListViewComponent
   ],
   providers : [ListesService],
   exports : [ListsComponent]
