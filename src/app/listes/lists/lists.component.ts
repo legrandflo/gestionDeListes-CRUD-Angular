@@ -4,11 +4,11 @@ import 'rxjs/add/operator/finally';
 
 import { ListesService } from '../listes.service';
 import { List, Options } from '../data-model';
-import { ListViewComponent } from '../list-view/list-view.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ListView2Component } from '../list-view-2/list-view-2.component';
-import { ListView3Component } from '../list-view-3/list-view-3.component';
 import { element } from 'protractor';
+import { ListViewComponent } from '../list-view/list-view.component';
+
+
 
 @Component({
   selector: 'lists',
@@ -24,65 +24,47 @@ export class ListsComponent implements OnInit {
   constructor(private listService: ListesService,
               private modalService: NgbModal) { } //NgbModal permet d'obtenir la méthode .open pour ouvrir un modal
 
-  ngOnInit() { this.getLists();
-  this.emptyList = {
-    id: 0,
+  ngOnInit() { this.getLists();//copie de la listes (celle du service)
+  this.emptyList = { //initialisation d'une liste vide pour "créer une liste"
+    id: this.listService.listes.length, //pour incrémenter les id des listes créées
     listName: '' ,
     options : [{key:'', optionName :''}]
   };
-
   }
 
+  // CRUD en front
+
+  // R
   getLists() {
-    //this.isLoading = true;
     this.lists = this.listService.getLists()
     this.selectedList = undefined;
   }
 
-
-  openAdd() { //ouvre un modal liste vide
+  // Création de liste / C
+  openAdd(element: List) { //ouvre un modal liste vide
+    const emptyListSend = element;
     const modalRef = this.modalService.open(ListViewComponent);
     modalRef.componentInstance.title = 'Ajouter une liste';
     modalRef.componentInstance.typeBouton = 'addListe'; 
-  }
-
-  openAdd3(element: List) { //ouvre un modal liste vide
-    const emptyListSend = element;
-    const modalRef = this.modalService.open(ListView3Component);
-    modalRef.componentInstance.title = 'Ajouter une liste';
-    modalRef.componentInstance.typeBouton = 'addListe'; 
-    console.log('typeBouton passé');
     modalRef.componentInstance.list = emptyListSend;
-    console.log('emptyList =', emptyListSend);
+    this.emptyList = { //pour vider les champs pour la création d'une liste après
+      id: this.listService.listes.length,
+      listName: '' ,
+      options : [{key:'', optionName :''}]
+    };
   }
-  // openAdd2() { //ouvre un modal liste vide
-  //   const modalRef = this.modalService.open(ListView2Component);
-  //   //modalRef.componentInstance.title = 'Ajouter une liste';
-  //  // modalRef.componentInstance.typeBouton = 'addListe'; 
-  // }
 
+  // Modificiation des listes /U
   openSelectUpdate(elementlist: List) { //ouvre modal avec contenu
     this.selectedList = elementlist;
     const modalRef = this.modalService.open(ListViewComponent);
     modalRef.componentInstance.list = this.selectedList; //list = celui du @Input dans list-view comp
     modalRef.componentInstance.typeBouton = 'updateListe';
-  }
-
-  openSelectUpdate3(elementlist: List) { //ouvre modal avec contenu
-    this.selectedList = elementlist;
-    const modalRef = this.modalService.open(ListView3Component);
-    modalRef.componentInstance.list = this.selectedList; //list = celui du @Input dans list-view comp
-    modalRef.componentInstance.typeBouton = 'updateListe';
     modalRef.componentInstance.title = 'Modifier la liste';
 
   }
-  // openSelectUpdate2(elementlist: List) { //ouvre modal avec contenu
-  //   this.selectedList = elementlist;
-  //   const modalRef = this.modalService.open(ListView2Component);
-  //  // modalRef.componentInstance.list = this.selectedList;
-  //   //modalRef.componentInstance.typeBouton = 'updateListe';
-  // }
 
+  // Effacer la liste /D
   delete(elementlist: List) {
     console.log("poubelle liste", elementlist);
     this.listService.deleteList(elementlist);

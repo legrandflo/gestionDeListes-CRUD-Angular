@@ -1,50 +1,69 @@
-
 <div class="modal-header">
   <h4>{{title}}</h4>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"><!--activeModal vient de NgbModule / cf ng-bootstrap-->
-    <span aria-hidden="true">&times;</span> <!--fabrication de la petite croix et sa fonction pour fermer le modal -->
+  
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <!--activeModal vient de NgbModule / cf ng-bootstrap-->
+    <span aria-hidden="true">&times;</span>
+    <!--fabrication de la petite croix et sa fonction pour fermer le modal -->
   </button>
 </div>
 
 <div class="modal-body">
+    <h4>Liste : {{list | json}}</h4>
+    
   <div class="container">
-    <h4>{{list | json}}</h4>
-    <hr>
-    <h4>Liste copiée :{{copyList | json}}</h4>
-   <input type="text" class="" [(ngModel)]="list.listName">
     <form [formGroup]="listForm" (ngSubmit)="onSubmit(typeBouton)" novalidate>
+        
       <!-- Nom de la liste -->
       <div class="form-group">
         <label class="center-block">Nom de la liste:
-           
-          <input type= "text" class="form-control" formControlName="listName" name="listName">{{listName}}
-          <input type="text" class="" [(ngModel)]="list.listName">
-          
+
+          <input type="text" class="" [(ngModel)]="list.listName" [ngModelOptions]="{standalone: true}">
           <!--id="focus"-->
         </label>
       </div>
-      <div formArrayName="optionName" class="well well-lg">
-        <div *ngFor="let option of optionName().controls; let i=index" [formGroupName]="i">
-          <!-- boucle options -->
-          <h4>Options #{{i + 1}}</h4>
+      <div>
+        <div *ngFor="let elem of list.options; let i=index">
+          <h5>Option # {{i + 1}}</h5>
           <div style="margin-left: 1em;">
             <div class="form-group">
               <label class="center-block">clé:
-                <input class="form-control" formControlName="key" required>
+                <input class="" [(ngModel)]="elem.key" required [ngModelOptions]="{standalone: true}">
               </label>
             </div>
             <div class="form-group">
               <label class="center-block">nom de l'option:
-                <input class="form-control" formControlName="optionName" required>
+                <input class="" [(ngModel)]="elem.optionName" required [ngModelOptions]="{standalone: true}">
               </label>
             </div>
           </div>
-          <br>
         </div>
         <button (click)="addOption()" type="button" class="btn btn-outline-info">Ajouter une option</button>
       </div>
+
+      <!-- Pour ajout d'option-->
+      <div *ngIf="selectedAddOption">
+        <h4>SelectedAddOption est TRUE !</h4>
+        Affiche Empty option : {{emptyOption | json}}
+        <div>
+            <h5>Option # </h5>
+            <div style="margin-left: 1em;">
+              <div class="form-group">
+                <label class="center-block">clé:
+                  <input class="" [(ngModel)]="emptyOption.key" required [ngModelOptions]="{standalone: true}">
+                </label>
+              </div>
+              <div class="form-group">
+                <label class="center-block">nom de l'option:
+                  <input class="" [(ngModel)]="emptyOption.optionName" required [ngModelOptions]="{standalone: true}">
+                </label>
+              </div>
+            </div>
+          </div>
+      </div> 
+
       <div style="margin-bottom: 1em">
-        <button id="btn1" type="submit" [disabled]="listForm.pristine" class="btn btn-success">Sauvegarder</button> 
+        <button id="btn1" type="submit" [disabled]="listForm.invalid" class="btn btn-success">Sauvegarder</button>
         <!-- <h2>&nbsp;</h2> -->
         <button id="btn1" type="reset" (click)="revert()" [disabled]="listForm.invalid" class="btn btn-danger">Effacer</button>
         <button type="return" class="btn btn-outline-secondary" (click)="activeModal.dismiss('Close click')">Retour</button>
@@ -53,4 +72,3 @@
   </div>
   <br>
 </div>
-

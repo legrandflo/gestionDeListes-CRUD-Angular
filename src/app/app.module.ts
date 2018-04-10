@@ -5,10 +5,6 @@ import { AppComponent }        from './app.component';
 import { ListesModule } from './listes/listes.module';
 import { ListViewComponent } from './listes/list-view/list-view.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ListView2Component } from './listes/list-view-2/list-view-2.component';
-import { ListView3Component } from './listes/list-view-3/list-view-3.component';
-
-
 
 @NgModule({
   imports: [
@@ -20,7 +16,7 @@ import { ListView3Component } from './listes/list-view-3/list-view-3.component';
     AppComponent,
   ],
   bootstrap: [ AppComponent ],
-  entryComponents :[ListViewComponent, ListView2Component, ListView3Component]
+  entryComponents :[ListViewComponent]
 })
 export class AppModule { }
 

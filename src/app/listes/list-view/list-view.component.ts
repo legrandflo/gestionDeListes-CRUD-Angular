@@ -4,7 +4,7 @@ import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@ang
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { ListesService } from '../listes.service';
-import { List,Options } from '../data-model';
+import { List, Options } from '../data-model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -15,10 +15,10 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ListViewComponent implements OnChanges {
   @Input() list: List; //import de listComp
   @Input() typeBouton: string;
-
-
+  @Input() title: string;
   listForm: FormGroup;
-  copyList :List = this.list; //copie de la liste importée
+  //copyList: List = this.list; //copie de la liste importée
+  emptyOption : Options;
 
   constructor(
     private fb: FormBuilder,
@@ -35,52 +35,72 @@ export class ListViewComponent implements OnChanges {
     });
   }
 
-  optionName(): FormArray { //initialisation de optionName en formArray
-    return this.listForm.get('optionName') as FormArray;
-  };
-
   setOptions(options: Options[]) { //crée un tableau d'options avec les champs remplis
-    const optionFGs = options.map(option => this.fb.group(option));
-    const optionFormArray = this.fb.array(optionFGs);
-    this.listForm.setControl('optionName', optionFormArray);
+    // const optionFGs = options.map(option => this.fb.group(option));
+    // const optionFormArray = this.fb.array(optionFGs);
+    // this.listForm.setControl('optionName', optionFormArray);
+    console.log('fonction setOptions');
   }
 
   addOption() { // appelé au bouton "ajouter une option"
-    this.optionName().push(this.fb.group(new Options()));
+    this.emptyOption ={
+      key:'',
+      optionName:''
+    }
+    console.log('et Empty option is :', this.emptyOption)
+    console.log('que fait addOptions ?', this.list.options)
+    this.list.options.push({
+      key: this.emptyOption.key,
+      optionName: this.emptyOption.optionName
+    })
+    console.log('APRES push', this.list.options);
+
   }
 
   prepareSaveList(): List { //mise à jour de la liste locale / création d'une nouvelle liste
-    const formModel = this.listForm.value;
+    console.log('récup name :', this.list.listName)
+    console.log('récup option', this.list.options.length)
+    console.log('id existant', this.list.id);
+    
     let newId = 0;
-    if (this.list) {
+    if (this) {
       newId = this.list.id;
+      console.log(' t es dans le if =')
     } //list vient avec l'@Input (elem of lists) de listComp
     else {
       newId = this.listService.listes.length;
-    } //length = longueur de la liste qui est dans le model
-    const optionCopy: Options[] = formModel.optionName.map(
-      (option: Options) => Object.assign({}, option)
-    );
-    const saveList: List = {
-      id: newId,
-      listName: formModel.listName as string,
-      options: optionCopy
+      console.log('t es dans le else');
+    }
+    let tabOption = [];
+    for (let i = 0; i < this.list.options.length; i++) {
+      tabOption.push({
+        key: this.list.options[i].key,
+        optionName: this.list.options[i].optionName
+      })
     };
-    return saveList;
+    console.log('tableau = ', tabOption);
+    const saveNewList: List = {
+      id: newId,
+      listName: this.list.listName as string,
+      options: tabOption
+    };
+    console.log('saveNewList =', saveNewList);
+    return saveNewList;
   }
 
-  ngOnChanges(changes) { //réinitialisation du formulaire
-    console.log("changes = ", changes);
+  ngOnChanges() { //réinitialisation du formulaire
     this.listForm.reset({ //fait la modif en visuel : si on a modifié qqch, il le garde et l'affiche en visuel
       listName: this.list.listName
     });
     this.setOptions(this.list.options);
   }
 
- // revert() { this.ngOnChanges(); } // fonction "effacer"
+  revert() { this.ngOnChanges(); } // fonction "effacer"
 
   onSubmit() {
+
     this.list = this.prepareSaveList();
+    console.log('list à pusher au submit : ', this.list)
     if (this.typeBouton == "addListe") {
       this.listService.addList(this.list); // mise à jour de la liste dans le service (BDD)
       this.listForm = this.fb.group({
