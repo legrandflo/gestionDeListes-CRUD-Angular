@@ -9,12 +9,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'list-view',
-  templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.css']
+  templateUrl: './list-view-3.component.html',
+  styleUrls: ['./list-view-3.component.css']
 })
-export class ListViewComponent implements OnChanges {
+export class ListView3Component /*implements OnChanges*/ {
   @Input() list: List; //import de listComp
   @Input() typeBouton: string;
+  @Input() title : string;
 
 
   listForm: FormGroup;
@@ -50,37 +51,44 @@ export class ListViewComponent implements OnChanges {
   }
 
   prepareSaveList(): List { //mise à jour de la liste locale / création d'une nouvelle liste
-    const formModel = this.listForm.value;
-    let newId = 0;
-    if (this.list) {
-      newId = this.list.id;
-    } //list vient avec l'@Input (elem of lists) de listComp
-    else {
-      newId = this.listService.listes.length;
-    } //length = longueur de la liste qui est dans le model
-    const optionCopy: Options[] = formModel.optionName.map(
-      (option: Options) => Object.assign({}, option)
-    );
-    const saveList: List = {
-      id: newId,
-      listName: formModel.listName as string,
-      options: optionCopy
-    };
-    return saveList;
-  }
+  console.log('récup name :', this.list.listName)
+   console.log('récup option', this.list.options.length)
+   let tabOption =[];
+  for (let i=0; i < this.list.options.length; i++){
+    tabOption.push({key : this.list.options[i].key,
+   name: this.list.options[i].optionName })};
+   console.log ('tableau = ', tabOption);
+   console.log('id', this.list.id);
+   let newId = 0;
+   if (this.list) {
+     newId = this.list.id;
+   } //list vient avec l'@Input (elem of lists) de listComp
+   else {
+     newId = this.listService.listes.length;
+   }
+   const saveNewList: List = {
+     id: newId,
+     listName: this.list.listName as string,
+     options: tabOption
+   };
+   console.log('saveNewList =', saveNewList);
+   return saveNewList;}
 
-  ngOnChanges(changes) { //réinitialisation du formulaire
-    console.log("changes = ", changes);
-    this.listForm.reset({ //fait la modif en visuel : si on a modifié qqch, il le garde et l'affiche en visuel
-      listName: this.list.listName
-    });
-    this.setOptions(this.list.options);
-  }
+
+  // ngOnChanges(changes) { //réinitialisation du formulaire
+  //   console.log("changes = ", changes);
+  //   this.listForm.reset({ //fait la modif en visuel : si on a modifié qqch, il le garde et l'affiche en visuel
+  //     listName: this.list.listName
+  //   });
+  //   this.setOptions(this.list.options);
+  // }
 
  // revert() { this.ngOnChanges(); } // fonction "effacer"
 
   onSubmit() {
+
     this.list = this.prepareSaveList();
+    console.log('list à pusher au submit : ', this.list)
     if (this.typeBouton == "addListe") {
       this.listService.addList(this.list); // mise à jour de la liste dans le service (BDD)
       this.listForm = this.fb.group({

@@ -7,6 +7,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListView2Component } from './list-view-2/list-view-2.component';
 import {FormlyModule, FormlyBootstrapModule} from 'ng-formly';
+import { ListView3Component } from './list-view-3/list-view-3.component';
+
 
 @NgModule({
   imports: [
@@ -19,7 +21,7 @@ import {FormlyModule, FormlyBootstrapModule} from 'ng-formly';
   
   ],
   declarations: [
-    ListsComponent,ListViewComponent, ListView2Component
+    ListsComponent,ListViewComponent, ListView2Component, ListView3Component
   ],
   providers : [ListesService],
   exports : [ListsComponent]

@@ -1,4 +1,4 @@
-<div class="row">
+<!--<div class="row">
   <div class="col-sm-12" id="btn1">
     <button type="button" class="btn btn-info" (click)="openAdd2()">créer une nouvelle liste</button>
   </div>
@@ -13,16 +13,17 @@
       <a class="glyphicon glyphicon-trash" (click)="delete(elemlist)"></a>
     </a>
   </div>
-</div>
+</div>-->
 
-<!--
+
 <h1>
   <a (click)="getLists()">Gérez vos listes !</a>
 </h1>
 
 <div class="row">
   <div class="col-sm-12" id="btn1">
-    <button type="button" class="btn btn-info" (click)="openAdd()">créer une nouvelle liste</button>
+    <button type="button" class="btn btn-info" (click)="openAdd3(emptyList)">créer une nouvelle liste</button>
+    empty list doit s'afficher ici : {{emptyList | json}}
   </div>
 </div>
 
@@ -31,8 +32,8 @@
   <div class="col-sm-12">
     <h4>Sélectionnez une liste:</h4>
     <a class="a1" *ngFor="let elemlist of lists | async">
-      <button (click)="openSelectUpdate(elemlist)" id="btn2">{{elemlist.listName}}</button>
+      <button (click)="openSelectUpdate3(elemlist)" id="btn2">{{elemlist.listName}}</button>
       <a class="glyphicon glyphicon-trash" (click)="delete(elemlist)"></a>
     </a>
   </div>
-</div>-->
+</div>
