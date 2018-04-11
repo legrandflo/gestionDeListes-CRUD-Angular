@@ -11,6 +11,12 @@
     font-size: 12px;
     font-weight: normal;
     color: black;
+    content : "*";
+}
+
+.center-block:after {
+    content : "*";
+    color: red;
 }
 
 .input {
@@ -26,3 +32,4 @@ h5{
     color: black;
     text-decoration: underline;
 }
+
