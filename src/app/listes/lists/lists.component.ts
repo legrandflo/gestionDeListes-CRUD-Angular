@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/finally';
-
 import { ListesService } from '../listes.service';
 import { List, Options } from '../data-model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { element } from 'protractor';
 import { ListViewComponent } from '../list-view/list-view.component';
-
-
 
 @Component({
   selector: 'lists',
@@ -26,7 +23,7 @@ export class ListsComponent implements OnInit {
 
   ngOnInit() { this.getLists();//copie de la listes (celle du service)
   this.emptyList = { //initialisation d'une liste vide pour "créer une liste"
-    id: this.listService.listes.length, //pour incrémenter les id des listes créées
+    id: this.listService.listes.length, //pour partir du dernier id existant dans la liste du service
     listName: '' ,
     options : [{key:'', optionName :''}]
   };
@@ -40,7 +37,7 @@ export class ListsComponent implements OnInit {
     this.selectedList = undefined;
   }
 
-  // Création de liste / C
+  // C / Création de liste 
   openAdd(element: List) { //ouvre un modal liste vide
     const emptyListSend = element;
     const modalRef = this.modalService.open(ListViewComponent);
@@ -48,28 +45,26 @@ export class ListsComponent implements OnInit {
     modalRef.componentInstance.typeBouton = 'addListe'; 
     modalRef.componentInstance.list = emptyListSend;
     this.emptyList = { //pour vider les champs pour la création d'une liste après
-      id: this.listService.listes.length,
+      id: this.listService.listes.length+1, //+1 pour incrémenter les id des nouvelles listes créées
       listName: '' ,
       options : [{key:'', optionName :''}]
     };
   }
 
-  // Modificiation des listes /U
+  // U / Modificiation des listes
   openSelectUpdate(elementlist: List) { //ouvre modal avec contenu
     this.selectedList = elementlist;
     const modalRef = this.modalService.open(ListViewComponent);
     modalRef.componentInstance.list = this.selectedList; //list = celui du @Input dans list-view comp
     modalRef.componentInstance.typeBouton = 'updateListe';
     modalRef.componentInstance.title = 'Modifier la liste';
-
   }
 
-  // Effacer la liste /D
+  // D / Effacer la liste
   delete(elementlist: List) {
     console.log("poubelle liste", elementlist);
     this.listService.deleteList(elementlist);
   }
-
 }
 
 
