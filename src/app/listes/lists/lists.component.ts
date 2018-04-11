@@ -14,6 +14,7 @@ import { ListViewComponent } from '../list-view/list-view.component';
 })
 export class ListsComponent implements OnInit {
   lists: Observable<List[]>;
+
   selectedList: List;
   emptyList: List;
   options : Options;
@@ -21,19 +22,21 @@ export class ListsComponent implements OnInit {
   constructor(private listService: ListesService,
               private modalService: NgbModal) { } //NgbModal permet d'obtenir la méthode .open pour ouvrir un modal
 
-  ngOnInit() { this.getLists();//copie de la listes (celle du service)
+  ngOnInit() { 
+    this.getLists();//copie de la listes (celle du service)
   this.emptyList = { //initialisation d'une liste vide pour "créer une liste"
     id: this.listService.listes.length, //pour partir du dernier id existant dans la liste du service
     listName: '' ,
     options : [{key:'', optionName :''}]
   };
+
   }
 
   // CRUD en front
 
   // R
   getLists() {
-    this.lists = this.listService.getLists()
+    this.lists = this.listService.getLists();
     this.selectedList = undefined;
   }
 
@@ -53,7 +56,10 @@ export class ListsComponent implements OnInit {
 
   // U / Modificiation des listes
   openSelectUpdate(elementlist: List) { //ouvre modal avec contenu
-    this.selectedList = elementlist;
+    //stringify transforme l'objet elementlist en string
+    //parse remet la string en objet
+    //permet de modifier elementlist avant de l'envoyer dans selectedList pour eviter que ngModel modifie en meme temps la liste du modal et celle de la vue
+    this.selectedList = JSON.parse(JSON.stringify(elementlist));
     const modalRef = this.modalService.open(ListViewComponent);
     modalRef.componentInstance.list = this.selectedList; //list = celui du @Input dans list-view comp
     modalRef.componentInstance.typeBouton = 'updateListe';
@@ -62,7 +68,6 @@ export class ListsComponent implements OnInit {
 
   // D / Effacer la liste
   delete(elementlist: List) {
-    console.log("poubelle liste", elementlist);
     this.listService.deleteList(elementlist);
   }
 }
