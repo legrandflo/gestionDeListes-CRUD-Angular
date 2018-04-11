@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Renderer2, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
@@ -12,21 +12,27 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.css']
 })
-export class ListViewComponent implements OnChanges {
+export class ListViewComponent implements OnChanges, OnInit {
   @Input() list: List; //import de listComp
   @Input() typeBouton: string;
   @Input() title: string;
   listForm: FormGroup;
-  //copyList: List = this.list; //copie de la liste importée
+  copyList: List = this.list; //copie de la liste importée
   emptyOption : Options;
 
   constructor(
     private fb: FormBuilder,
     private listService: ListesService,
-    public activeModal: NgbActiveModal) {
+    public activeModal: NgbActiveModal,
+    private renderer: Renderer2) {
     this.createForm();
   }
 
+  ngOnInit(){
+    let inputElement = this.renderer.selectRootElement('#focusMe');
+    inputElement.focus();
+
+  }
 
   createForm() { //création du form vide
     this.listForm = this.fb.group({
@@ -43,7 +49,7 @@ export class ListViewComponent implements OnChanges {
   }
 
   addOption() { // appelé au bouton "ajouter une option"
-    this.emptyOption ={
+  this.emptyOption ={
       key:'',
       optionName:''
     }

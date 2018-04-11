@@ -18,7 +18,7 @@
           <div class="form-group">
             <div class="card-header">
               <label class="center-block">Nom de la liste:
-                <input type="text" id="input" class="" [(ngModel)]="list.listName" [ngModelOptions]="{standalone: true}">
+                <input type="text" id="focusMe" class="input" [(ngModel)]="list.listName" [ngModelOptions]="{standalone: true}">
                 <!--id="focus"-->
               </label>
             </div>
@@ -30,12 +30,12 @@
                 <div style="margin-left: 1em;">
                   <div class="form-group">
                     <label class="center-block">clé:
-                      <input class="" id="input" [(ngModel)]="elem.key" required [ngModelOptions]="{standalone: true}">
+                      <input class="input"  [(ngModel)]="elem.key" required [ngModelOptions]="{standalone: true}">
                     </label>
                   </div>
                   <div class="form-group">
                     <label class="center-block">nom de l'option:
-                      <input class="" id="input" [(ngModel)]="elem.optionName" required [ngModelOptions]="{standalone: true}">
+                      <input class="input" [(ngModel)]="elem.optionName" required [ngModelOptions]="{standalone: true}">
                     </label>
                   </div>
                 </div>
