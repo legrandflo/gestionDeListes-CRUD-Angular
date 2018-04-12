@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, Renderer2, OnInit } from '@angular/core';
+import { Component, Input, Renderer2, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs/Observable';
@@ -12,7 +12,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.css']
 })
-export class ListViewComponent implements OnChanges, OnInit {
+export class ListViewComponent implements OnInit {
   @Input() list: List; //import de listComp
   @Input() typeBouton: string;
   @Input() title: string;
@@ -20,13 +20,29 @@ export class ListViewComponent implements OnChanges, OnInit {
   emptyOption: Options;
 
   constructor(private fb: FormBuilder,
-              private listService: ListesService,
+              //private listService: ListesService,
               public activeModal: NgbActiveModal,
               private renderer: Renderer2) {    //import renderer2 pour créer le focus
       this.createForm();
   }
 
   ngOnInit() {
+
+    if(this.list && (typeof this.list.id !== 'undefined'))
+    {
+      console.log('mise à jour de la liste id='+this.list.id)
+      this.title = "Modification d'une liste"
+    }
+    else{
+      console.log('nouvelle liste')
+      this.list =   
+      { //initialisation d'une liste vide pour "créer une liste"
+        listName: '',
+        options: [{ key: '', optionName: '' }]
+      };
+      this.title = 'Ajouter une liste'
+    }
+
     let inputElement = this.renderer.selectRootElement('#focusMe');//recuperation de input grace a id focusMe 
     inputElement.focus();//appel de la fonction focus sur l'input
   }
@@ -50,51 +66,10 @@ export class ListViewComponent implements OnChanges, OnInit {
     })
   }
 
-  prepareSaveList(): List { //mise à jour de la liste locale / création d'une nouvelle liste
-    let newId = 0;
-    if (this) {
-      newId = this.list.id;
-    } //list vient avec l'@Input (elem of lists) de listComp
-    else {
-      newId = this.listService.listes.length;
-    }
-    let tabOption = [];
-    for (let i = 0; i < this.list.options.length; i++) {
-      tabOption.push({
-        key: this.list.options[i].key,
-        optionName: this.list.options[i].optionName
-      })
-    };
-    const saveNewList: List = {
-      id: newId,
-      listName: this.list.listName as string,
-      options: tabOption
-    };
-    return saveNewList;
-  }
-
-  ngOnChanges() { //réinitialisation du formulaire
-    this.listForm.reset({ //fait la modif en visuel : si on a modifié qqch, il le garde et l'affiche en visuel
-      listName: this.list.listName
-    });
-  }
-
-  revert() { this.ngOnChanges(); } // fonction "effacer"
-
   onSubmit() {
-    this.list = this.prepareSaveList();
-    if (this.typeBouton == "addListe") {
-      this.listService.addList(this.list); // mise à jour de la liste dans le service (BDD)
-      this.listForm = this.fb.group({
-        listName: '',
-        optionName: this.fb.array([])
-      });
-    }
-    else if (this.typeBouton == "updateListe") {
-      this.listService.updateList(this.list).subscribe(); // mise à jour de la liste dans le service (BDD)
-    }
-    this.activeModal.close(); //activeModal vient de NgbModule pour utliser close et dismiss sur le modal
-    //this.ngOnChanges();
+
+    this.activeModal.close(this.list);
+    
   }
 
 }

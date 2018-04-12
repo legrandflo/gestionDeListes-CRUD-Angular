@@ -23,6 +23,7 @@ import { ListViewComponent } from './list-view/list-view.component';
     ListsComponent,ListViewComponent
   ],
   providers : [ListesService],
-  exports : [ListsComponent]
+  exports : [ListsComponent],
+  entryComponents :[ListViewComponent]
 })
 export class ListesModule { }

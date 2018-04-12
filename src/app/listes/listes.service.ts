@@ -59,6 +59,9 @@ export class ListesService {
 }
 //fonction de création de liste d'options dans la listes
   addList(liste: List){
+
+    liste.id = this.listes[this.listes.length-1].id + 1
+
     this.listes.push(liste);
   }
 

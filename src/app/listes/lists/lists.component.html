@@ -5,7 +5,7 @@
 
 <div class="row">
   <div class="col-sm-12" id="btn1">
-    <button type="button" class="btn btn-info" (click)="openAdd(emptyList)">créer une nouvelle liste</button>
+    <button type="button" class="btn btn-info" (click)="open()">créer une nouvelle liste</button>
   </div>
 </div>
 
@@ -14,7 +14,7 @@
   <div class="col-sm-12">
     <h4>Sélectionnez une liste:</h4>
     <a class="a1" *ngFor="let elemlist of lists | async">
-      <button (click)="openSelectUpdate(elemlist)" id="btn2">{{elemlist.listName}}</button>
+      <button (click)="open(elemlist)" id="btn2">{{elemlist.listName}} ({{elemlist.options.length}})</button>
       <a class="glyphicon glyphicon-trash" (click)="delete(elemlist)"></a>
     </a>
   </div>

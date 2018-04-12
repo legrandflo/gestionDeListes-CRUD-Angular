@@ -16,7 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppComponent,
   ],
   bootstrap: [ AppComponent ],
-  entryComponents :[ListViewComponent]
+  // entryComponents :[ListViewComponent]
 })
 export class AppModule { }
 

@@ -1,5 +1,5 @@
 export class List {
-  id = 0;
+  id ?= 0;
   listName = '';
   options: Options[];
 }
