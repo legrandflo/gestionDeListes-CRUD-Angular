@@ -14,32 +14,27 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ListViewComponent implements OnInit {
   @Input() list: List; //import de listComp
-  @Input() typeBouton: string;
-  @Input() title: string;
+  title: string;
   listForm: FormGroup;
   emptyOption: Options;
 
   constructor(private fb: FormBuilder,
-              //private listService: ListesService,
-              public activeModal: NgbActiveModal,
-              private renderer: Renderer2) {    //import renderer2 pour créer le focus
-      this.createForm();
+    //private listService: ListesService,
+    public activeModal: NgbActiveModal,
+    private renderer: Renderer2) {    //import renderer2 pour créer le focus
+    this.createForm();
   }
 
   ngOnInit() {
-
-    if(this.list && (typeof this.list.id !== 'undefined'))
-    {
-      console.log('mise à jour de la liste id='+this.list.id)
+    if (this.list && (typeof this.list.id !== 'undefined')) {
       this.title = "Modification d'une liste"
     }
-    else{
-      console.log('nouvelle liste')
-      this.list =   
-      { //initialisation d'une liste vide pour "créer une liste"
-        listName: '',
-        options: [{ key: '', optionName: '' }]
-      };
+    else {
+      this.list =
+        { //initialisation d'une liste vide pour "créer une liste"
+          listName: '',
+          options: [{ key: '', optionName: '' }]
+        };
       this.title = 'Ajouter une liste'
     }
 
@@ -66,10 +61,15 @@ export class ListViewComponent implements OnInit {
     })
   }
 
-  onSubmit() {
+  deleteOption(i){
+    console.log('poubelle i', i)
+    console.log('liste d options avant', this.list.options)
+    this.list.options.splice(i,1);
+    console.log('liste d options après delete', this.list.options)
+  }
 
-    this.activeModal.close(this.list);
-    
+  onSubmit() {
+    this.activeModal.close(this.list);//ferme la modal en envoie la liste 
   }
 
 }

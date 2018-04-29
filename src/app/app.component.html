@@ -1,14 +1,6 @@
 <div class="container">
 
-    <ul class="nav nav-tabs mb-5">
-       
-        <li (click)="activeMenu = 1"><a href="#">Les questionnaires</a></li>
-        <li (click)="activeMenu = 2"><a href="#">Le paramètrage des listes déroulantes</a></li>
-       
-      </ul>
-      
-  <surveys *ngIf="activeMenu == 1"></surveys>
-  <lists *ngIf="activeMenu == 2"></lists>
+  <lists></lists>
 </div>
 
 

@@ -5,20 +5,17 @@ import { AppComponent }        from './app.component';
 import { ListesModule } from './listes/listes.module';
 import { ListViewComponent } from './listes/list-view/list-view.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SurveysModule } from './surveys/surveys.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     ListesModule,
-    SurveysModule,
     NgbModule.forRoot()
   ],
   declarations: [
     AppComponent,
   ],
-  bootstrap: [ AppComponent ],
-  // entryComponents :[ListViewComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
 
